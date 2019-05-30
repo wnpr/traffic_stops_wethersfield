@@ -1,7 +1,9 @@
 library(tidyr)
 library(dplyr)
 
-load("traffic_reason_data.rdata")
+#setwd()
+
+load("traffic_reason.rdata")
 
 #2018 and 2019 Ranked, Based on 10 Officer Names Obtained By WNPR
 by_officer <- total %>% group_by(Name) %>% 
