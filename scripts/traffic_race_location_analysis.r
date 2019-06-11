@@ -39,24 +39,6 @@ eulizier_250044 <- total %>%
   mutate(percent_race_of_stops = (n/sum(eulizier_250044$n))*100)
 
 
-#Verify Methodology For 'Hispanic' Count Against Barone Report CRPR Numbers 
-#page 28 of 2017 report for statewide by race
-#http://sue.apps-1and1.com/wp-content/uploads/2018/08/November-2017-Connecticut-Racial-Profiling-Report.pdf
-
-df <- read.csv("connecticut-r3.csv", header = T, stringsAsFactors = F)
-
-df <- df %>% 
-  mutate(Race = 
-           ifelse(df$SubjectEthnicityCode == "N", df$SubjectRaceCode, df$SubjectEthnicityCode)
-  )
-
-stops_by_race <- df %>% 
-  group_by(Race) %>% 
-  count(Race) %>% 
-  arrange(desc(n))%>% 
-  mutate(percent_race_of_stops = (n/sum(stops_by_race$n))*100)
-
-
 ##Count of Location for Stop For Department, Salvatore, and Eulizier
 
 library(stringr)
