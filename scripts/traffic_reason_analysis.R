@@ -47,25 +47,6 @@ department_reason <- total %>%
   mutate(percent_of_stops = (n/sum(department_reason$n))*100)
 
 
-##chart Deparment Reason and Eulizier reason
-library(ggplot2)
-library(reshape2)
-
-department_reason_melt <- melt(department_reason, id.vars='percent_of_stops')
-head(department_reason_melt)
-
-ggplot(df2, aes(x=day, y=value, fill=variable)) +
-  geom_bar(stat='identity', position='dodge')
-
-chart <- ggplot(department_reason, (aes(ReasonForStop, percent_of_stops)))+
-                  geom_bar(position="dodge", stat="identity")+
-  geom_bar(data=eulizier_250044, aes(ReasonForStop, percent_of_stops), color = 'red',
-           position="dodge", stat="identity")+
-  theme(axis.text.x = element_text(angle=65, vjust=0.6))
-  
-
-chart
-
 ##Stops That Were Recorded Just Since Euilizer Was Hired In August 2018 through March 2019
 
 load("all_stops_since_aug_2018.rdata")
