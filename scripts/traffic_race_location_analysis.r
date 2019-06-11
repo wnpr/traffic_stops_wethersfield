@@ -42,8 +42,6 @@ eulizier_250044 <- total %>%
 #Verify Methodology For 'Hispanic' Count Against Barone Report CRPR Numbers 
 #page 28 of 2017 report for statewide by race
 #http://sue.apps-1and1.com/wp-content/uploads/2018/08/November-2017-Connecticut-Racial-Profiling-Report.pdf
-#my analysis matches his numbers
-#he also told me that's how he counts it :) 
 
 df <- read.csv("connecticut-r3.csv", header = T, stringsAsFactors = F)
 
@@ -101,16 +99,25 @@ eulizier_silas <- total_lower_case %>%
   mutate(percent_of_all_stops = (n/sum(eulizier_silas$n))*100)
 
 
-#Where Are Cars Being Stopped On Silas Deane Highway?         
-#filter for 'silas' on original total df
+##Where Are Cars Being Stopped On Silas Deane Highway?         
+#filter for 'silas' on original 'total' df
 department_silas_location <- total_lower_case %>% 
       filter(str_detect(location, "silas")) %>% 
   group_by(location) %>% 
   count(location) %>% 
   arrange(desc(n)) %>% 
-  mutate(percent_race_of_silas_stops = (n/sum(department_silas_location$n))*100)
+  mutate(percent_location_of_silas_stops = (n/sum(department_silas_location$n))*100)
+
+
+##note duplications/multiple names for same place in output DF
+#filtered to address duplicates, if needed
+#example maple location search
+
+department_silas_maple <- department_silas_location %>% 
+  filter(str_detect(location, "maple"))
+
+maple_n_per <- sum(department_silas_maple$percent_location_of_silas_stops)
 
 #write.csv(department_silas_location, "department_silas_location.csv")
-
 
 
